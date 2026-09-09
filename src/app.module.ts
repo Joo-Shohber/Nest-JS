@@ -1,3 +1,7 @@
+// import { User } from './users/users.entity';
+// import { Review } from './reviews/reviews.entity';
+// import { Product } from './products/products.entity';
+
 import {
   ClassSerializerInterceptor,
   MiddlewareConsumer,
@@ -8,17 +12,16 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './products/products.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './users/users.entity';
-import { Review } from './reviews/reviews.entity';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { UploadsModule } from './uploads/uploads.module';
 import { MailModule } from './mail/mail.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { dataSourceOptions } from '../db/data-source';
+import { AppController } from './app.controller';
 
 @Module({
+  controllers: [AppController],
   imports: [
     UsersModule,
     ProductsModule,
@@ -27,7 +30,10 @@ import { dataSourceOptions } from '../db/data-source';
     MailModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath:
+        process.env.NODE_ENV !== 'production'
+          ? `.env.${process.env.NODE_ENV}`
+          : '.env',
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
     ThrottlerModule.forRoot([
