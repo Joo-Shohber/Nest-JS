@@ -1,0 +1,32 @@
+### Get All Users
+GET http://localhost:3000/api/users
+
+### Get Single User 
+GET http://localhost:3000/api/users/current-user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg4NDQ3MzAyLCJleHAiOjE3ODg1MzM3MDJ9.N5ngHq2W_RPu3A1JTwM3a9djpCwjN76iGyY9WUw29-Q
+
+### Register
+POST http://localhost:3000/api/users/auth/register
+Content-Type: application/json
+
+{
+  "email" : "Sonic@gmail.com",
+  "password" : "Sonic123",
+  "username" : "Shohber"
+}
+
+### Login
+POST http://localhost:3000/api/users/auth/login
+Content-Type: application/json
+
+{
+  "email": "Sonic@gmail.com",
+  "password" : "Sonic123"
+}
+
+###
+GET  http://localhost:3000/api/users/images/1788291888688-970117185-WhatsApp Image 2025-11-26 at 4.56.10 PM.jpeg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg4NDQ3MzAyLCJleHAiOjE3ODg1MzM3MDJ9.N5ngHq2W_RPu3A1JTwM3a9djpCwjN76iGyY9WUw29-Q
+
+### Reset Password
+GET http://localhost:3000/api/users/reset-password/Joo@gmail.com

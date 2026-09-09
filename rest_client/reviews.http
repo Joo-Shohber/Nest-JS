@@ -1,0 +1,30 @@
+### Get All Reviews
+GET http://localhost:3000/api/reviews?page=2&limit=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+
+### Get Single Review
+GET http://localhost:3000/api/reviews/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+
+### Create new Review
+POST http://localhost:3000/api/reviews/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+Content-Type: application/json
+
+{
+  "rating": 2,
+  "comment": "Bad product"
+}
+
+### Update Review
+PUT http://localhost:3000/api/reviews/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+
+{
+  "rating": 5
+}
+
+### Delete Review
+DELETE http://localhost:3000/api/reviews/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg4MjY5NTk4LCJleHAiOjE3ODgzNTU5OTh9.IMhqSI38FLVhvMw80nj2d1XW2BYgGm0Km2YzT2e0bf0

@@ -1,0 +1,29 @@
+### Get All Products
+GET http://localhost:3000/api/products
+
+### Get Single Product by ID
+GET http://localhost:3000/api/products/16
+
+### Create new Product
+POST http://localhost:3000/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+Content-Type: application/json
+
+{
+  "title": "my book in programming",
+  "description": "Description about my book in programming",
+  "price": 8
+}
+
+### Update Product
+PUT http://localhost:3000/api/products/19
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
+
+{
+  "price": 16
+}
+
+### Delete Product
+DELETE http://localhost:3000/api/products/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4ODIxODA5MiwiZXhwIjoxNzg4MzA0NDkyfQ.4AtzacKmZ5qz3j10cWH24CvpwmV7_59zmP5ztyCw8GA
