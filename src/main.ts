@@ -21,8 +21,8 @@ async function bootstrap() {
 
   const swagger = new DocumentBuilder()
     .setVersion('1.0')
-    .setTitle('Nest Js - API')
-    .setDescription('Your API Description')
+    .setTitle('Nest Js - Small Ecommerce')
+    .setDescription('Learning Project')
     .addServer(process.env.DOMAIN)
     .addSecurity('bearer', { type: 'http', scheme: 'bearer' })
     .addBearerAuth()
