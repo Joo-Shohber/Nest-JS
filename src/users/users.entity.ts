@@ -24,9 +24,12 @@ export class User {
   @Column({ type: 'varchar', length: 250, unique: true })
   email: string;
 
-  @Column()
   @Exclude()
-  password: string;
+  @Column({ type: 'varchar', nullable: true, default: null })
+  password: string | null;
+
+  @Column({ type: 'varchar', nullable: true, default: null, unique: true })
+  googleId: string | null;
 
   @Column({ type: 'enum', enum: UserType, default: UserType.USER })
   userType: UserType;

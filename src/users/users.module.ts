@@ -10,12 +10,15 @@ import { AuthProvider } from './auth.provider';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { MailModule } from '../mail/mail.module';
+import { GoogleStrategy } from './google.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   controllers: [UsersController],
-  providers: [UserService, AuthProvider],
+  providers: [UserService, AuthProvider, GoogleStrategy],
   exports: [UserService],
   imports: [
+    PassportModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
       inject: [ConfigService],

@@ -218,6 +218,44 @@ export class AuthProvider {
     return bcrypt.hash(password, salt);
   }
 
+  // Google
+
+  public async validateGoogleUser(data: {
+    googleId: string;
+    email: string;
+    username: string;
+  }) {
+    let user = await this.userRepository.findOne({
+      where: [{ googleId: data.googleId }, { email: data.email }],
+    });
+
+    if (user) {
+      if (!user.googleId) {
+        user.googleId = data.googleId;
+        user = await this.userRepository.save(user);
+      }
+      return user;
+    }
+
+    user = this.userRepository.create({
+      googleId: data.googleId,
+      email: data.email,
+      username: data.username,
+      isAccountVerified: true,
+    });
+
+    return this.userRepository.save(user);
+  }
+
+  public async loginWithGoogle(user: User) {
+    const accessToken = await this.generateJwt({
+      id: user.id,
+      userType: user.userType,
+    });
+
+    return { accessToken };
+  }
+
   // Helpers
 
   private async generateJwt(payload: JwtPayloadType): Promise<string> {

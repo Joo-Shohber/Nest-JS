@@ -1,5 +1,6 @@
 ### Get All Users
 GET http://localhost:3000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg5MDY0MDUyLCJleHAiOjE3ODkxNTA0NTJ9.vJAv8UYzH5fI-iVNvRDc4GihybAHVJ2ASiauxUCreMk
 
 ### Get Single User 
 GET http://localhost:3000/api/users/current-user

@@ -87,6 +87,15 @@ export class UserService {
     return this.authProvider.resetPassword(dto);
   }
 
+  /**
+   * Login With Google
+   * @param user User From Google Profile
+   * @returns JWT Access Token
+   */
+  public async loginWithGoogle(user: User) {
+    return this.authProvider.loginWithGoogle(user);
+  }
+
   // User
 
   /**

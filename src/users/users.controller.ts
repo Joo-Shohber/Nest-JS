@@ -16,6 +16,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Req,
   Res,
   UploadedFile,
   UseGuards,
@@ -31,6 +32,7 @@ import { ForgetPasswordDto } from './dtos/forget-password.dto';
 import { ResetUserPasswordDto } from './dtos/reset-password.dto';
 import { ApiBody, ApiConsumes, ApiQuery, ApiSecurity } from '@nestjs/swagger';
 import { ImageUploadedDto } from './dtos/image-upload.dto';
+import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
 
 @Controller('/api/users')
 export class UsersController {
@@ -75,6 +77,18 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   public resetPassword(@Body() body: ResetUserPasswordDto) {
     return this.userService.resetPassword(body);
+  }
+
+  // Google Auth
+
+  @Get('auth/google')
+  @UseGuards(PassportAuthGuard('google'))
+  public googleAuth() {}
+
+  @Get('auth/google/callback')
+  @UseGuards(PassportAuthGuard('google'))
+  public async googleCallback(@Req() req: any) {
+    return this.userService.loginWithGoogle(req.user);
   }
 
   // Current User
