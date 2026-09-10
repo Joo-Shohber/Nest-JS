@@ -17,19 +17,7 @@ async function bootstrap() {
     }),
   );
 
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: [`'self'`],
-          scriptSrc: [`'self'`, `'unsafe-inline'`, 'cdn.jsdelivr.net'],
-          styleSrc: [`'self'`, `'unsafe-inline'`, 'cdn.jsdelivr.net'],
-          imgSrc: [`'self'`, 'data:', 'cdn.jsdelivr.net'],
-          connectSrc: [`'self'`, 'cdn.jsdelivr.net'],
-        },
-      },
-    }),
-  );
+  app.use(helmet({ contentSecurityPolicy: false }));
 
   const swagger = new DocumentBuilder()
     .setVersion('1.0')
