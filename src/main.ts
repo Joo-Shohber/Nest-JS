@@ -20,7 +20,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .setTitle('Nest Js - API')
     .setDescription('Your API Description')
-    .addServer('http://localhost:3000')
+    .addServer(process.env.DOMAIN)
     .addSecurity('bearer', { type: 'http', scheme: 'bearer' })
     .addBearerAuth()
     .build();
