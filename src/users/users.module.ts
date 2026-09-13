@@ -18,6 +18,7 @@ import { PassportModule } from '@nestjs/passport';
   providers: [UserService, AuthProvider, GoogleStrategy],
   exports: [UserService],
   imports: [
+    MailModule,
     PassportModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
@@ -56,7 +57,6 @@ import { PassportModule } from '@nestjs/passport';
         fileSize: 2 * 1024 * 1024,
       },
     }),
-    MailModule,
   ],
 })
 export class UsersModule {}
