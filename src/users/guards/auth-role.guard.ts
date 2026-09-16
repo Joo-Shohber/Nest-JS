@@ -6,10 +6,12 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { TokenExpiredError } from 'jsonwebtoken';
 import { JwtPayloadType } from '../../utils/types';
 import { CURRENT_USER_KEY } from '../../utils/constants';
 import { UserType } from '../../utils/enums';
@@ -23,35 +25,43 @@ export class AuthRoleGuard implements CanActivate {
     private readonly userService: UserService,
   ) {}
 
-  async canActivate(context: ExecutionContext) {
-    const roles: UserType[] = this.reflector.getAllAndOverride('roles', [
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const roles: UserType[] = this.reflector.getAllAndOverride<UserType[]>('roles', [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (!roles || roles.length === 0)
+
+    if (!roles || roles.length === 0) {
       throw new BadRequestException('No Roles Provided');
+    }
 
     const request: Request = context.switchToHttp().getRequest();
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    if (token && type === 'Bearer') {
-      try {
-        const payload: JwtPayloadType = await this.jwtService.verifyAsync(
-          token,
-          {
-            secret: this.config.get<string>('JWT_SECRET'),
-          },
-        );
-        const user = await this.userService.getCurrentUser(payload.id);
-        if (roles.includes(user.userType)) {
-          request[CURRENT_USER_KEY] = payload;
-          return true;
-        }
-      } catch (error) {
-        throw new UnauthorizedException('Access Denied, Invalid Token');
-      }
-    } else {
+
+    if (!token || type !== 'Bearer') {
       throw new UnauthorizedException('Access Denied, No Token Provided');
     }
-    throw new UnauthorizedException('Access Denied, Not Allowed');
+
+    let payload: JwtPayloadType;
+
+    try {
+      payload = await this.jwtService.verifyAsync(token, {
+        secret: this.config.get<string>('JWT_SECRET'),
+      });
+    } catch (error) {
+      if (error instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Token has expired');
+      }
+
+      throw new UnauthorizedException('Access Denied, Invalid Token');
+    }
+
+    const user = await this.userService.getCurrentUser(payload.id);
+    if (!roles.includes(user.userType)) {
+      throw new ForbiddenException('Access Denied, Not Allowed');
+    }
+
+    request[CURRENT_USER_KEY] = payload;
+    return true;
   }
 }

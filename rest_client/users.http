@@ -1,10 +1,10 @@
 ### Get All Users
 GET http://localhost:3000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg5MDY0MDUyLCJleHAiOjE3ODkxNTA0NTJ9.vJAv8UYzH5fI-iVNvRDc4GihybAHVJ2ASiauxUCreMk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4OTU2MDk2NSwiZXhwIjoxNzg5NjQ3MzY1fQ.7298i7Ul8nLyyOkuuIlOlutxLdgDRcNzPm2eLxUEPD4
 
 ### Get Single User 
 GET http://localhost:3000/api/users/current-user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzg4NDQ3MzAyLCJleHAiOjE3ODg1MzM3MDJ9.N5ngHq2W_RPu3A1JTwM3a9djpCwjN76iGyY9WUw29-Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc4OTU2MDk2NSwiZXhwIjoxNzg5NjQ3MzY1fQ.7298i7Ul8nLyyOkuuIlOlutxLdgDRcNzPm2eLxUEPD4
 
 ### Register
 POST http://localhost:3000/api/users/auth/register

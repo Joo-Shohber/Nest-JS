@@ -3,13 +3,15 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { UploadsModule } from './uploads/uploads.module';
 import { MailModule } from './mail/mail.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { dataSourceOptions } from '../db/data-source';
 import { AppController } from './app.controller';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [AppController],
@@ -19,6 +21,7 @@ import { AppController } from './app.controller';
     ReviewsModule,
     UploadsModule,
     MailModule,
+    TypeOrmModule.forRoot(dataSourceOptions),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath:
@@ -26,13 +29,28 @@ import { AppController } from './app.controller';
           ? `.env.${process.env.NODE_ENV}`
           : '.env',
     }),
-    TypeOrmModule.forRoot(dataSourceOptions),
     ThrottlerModule.forRoot([
       {
         ttl: 60000,
         limit: 10,
       },
     ]),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => {
+        return {
+          store: await redisStore({
+            socket: {
+              host: config.get<string>('REDIS_HOST'),
+              port: config.get<number>('REDIS_PORT'),
+            },
+            password: config.get<string>('REDIS_PASSWORD'),
+            ttl: 60_000,
+          }),
+        };
+      },
+    }),
   ],
 
   providers: [
