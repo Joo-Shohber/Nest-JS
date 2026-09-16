@@ -10,7 +10,8 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { dataSourceOptions } from '../db/data-source';
 import { AppController } from './app.controller';
 import { CacheModule } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
+import { Keyv } from 'keyv';
+import KeyvRedis from '@keyv/redis';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -39,15 +40,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       isGlobal: true,
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => {
+        const host = config.get<string>('REDIS_HOST');
+        const port = config.get<number>('REDIS_PORT');
+        const password = config.get<string>('REDIS_PASSWORD');
+        const redisUrl = `redis://:${password}@${host}:${port}`;
+
         return {
-          store: await redisStore({
-            socket: {
-              host: config.get<string>('REDIS_HOST'),
-              port: config.get<number>('REDIS_PORT'),
-            },
-            password: config.get<string>('REDIS_PASSWORD'),
-            ttl: 60_000,
-          }),
+          stores: [
+            new Keyv({
+              store: new KeyvRedis(redisUrl),
+            }),
+          ],
+          ttl: 60_000,
         };
       },
     }),

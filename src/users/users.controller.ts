@@ -37,7 +37,7 @@ import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('/api/users')
 @UseInterceptors(CacheInterceptor)
-@CacheTTL(100_000)
+@CacheTTL(60 * 60 * 1000)
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 
