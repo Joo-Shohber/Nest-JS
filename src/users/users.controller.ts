@@ -33,11 +33,8 @@ import { ResetUserPasswordDto } from './dtos/reset-password.dto';
 import { ApiBody, ApiConsumes, ApiQuery, ApiSecurity } from '@nestjs/swagger';
 import { ImageUploadedDto } from './dtos/image-upload.dto';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('/api/users')
-@UseInterceptors(CacheInterceptor)
-@CacheTTL(60 * 60 * 1000)
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 

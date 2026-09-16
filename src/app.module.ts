@@ -9,9 +9,7 @@ import { MailModule } from './mail/mail.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { dataSourceOptions } from '../db/data-source';
 import { AppController } from './app.controller';
-import { CacheModule } from '@nestjs/cache-manager';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { redisStore } from 'cache-manager-redis-yet';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [AppController],
@@ -35,22 +33,6 @@ import { redisStore } from 'cache-manager-redis-yet';
         limit: 10,
       },
     ]),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      inject: [ConfigService],
-      useFactory: async (config: ConfigService) => {
-        return {
-          store: await redisStore({
-            socket: {
-              host: config.get<string>('REDIS_HOST'),
-              port: config.get<number>('REDIS_PORT'),
-            },
-            password: config.get<string>('REDIS_PASSWORD'),
-            ttl: 60_000,
-          }),
-        };
-      },
-    }),
   ],
 
   providers: [
