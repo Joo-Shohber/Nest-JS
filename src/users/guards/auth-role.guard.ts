@@ -26,10 +26,10 @@ export class AuthRoleGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const roles: UserType[] = this.reflector.getAllAndOverride<UserType[]>('roles', [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const roles: UserType[] = this.reflector.getAllAndOverride<UserType[]>(
+      'roles',
+      [context.getHandler(), context.getClass()],
+    );
 
     if (!roles || roles.length === 0) {
       throw new BadRequestException('No Roles Provided');

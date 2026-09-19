@@ -1,9 +1,3 @@
-import type { JwtPayloadType } from '../utils/types';
-import { CurrentUser } from './decorators/current-user.decorator';
-import { LoginDto } from './dtos/login.dto';
-import { RegisterDto } from './dtos/register.dto';
-import { AuthGuard } from './guards/auth.guard';
-import { UserService } from './users.service';
 import {
   BadRequestException,
   Body,
@@ -22,6 +16,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import type { JwtPayloadType } from '../utils/types';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { LoginDto } from './dtos/login.dto';
+import { RegisterDto } from './dtos/register.dto';
+import { AuthGuard } from './guards/auth.guard';
+import { UserService } from './users.service';
 import { Roles } from './decorators/user-role.decorator';
 import { UserType } from '../utils/enums';
 import { AuthRoleGuard } from './guards/auth-role.guard';
