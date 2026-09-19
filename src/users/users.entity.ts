@@ -10,7 +10,6 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-
 import { UserType } from '../utils/enums';
 
 @Entity({ name: 'users' })

@@ -9,14 +9,14 @@ import { diskStorage } from 'multer';
     MulterModule.register({
       storage: diskStorage({
         destination: './images',
-        filename: (req, file, cb) => {
+        filename: (_req, file, cb) => {
           const prefix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           const filename = `${prefix}-${file.originalname}`;
           cb(null, filename);
         },
       }),
 
-      fileFilter: (req, file, cb) => {
+      fileFilter: (_req, file, cb) => {
         if (!file.mimetype.startsWith('image/')) {
           return cb(
             new BadRequestException('Only image files are allowed'),

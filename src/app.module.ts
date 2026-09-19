@@ -1,4 +1,10 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { ReviewsModule } from './reviews/reviews.module';
@@ -9,7 +15,8 @@ import { MailModule } from './mail/mail.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { dataSourceOptions } from '../db/data-source';
 import { AppController } from './app.controller';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
+import { LoggerMiddleware } from './utils/middlewares/logger.middleware';
 
 @Module({
   controllers: [AppController],
@@ -29,7 +36,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,
+        ttl: 60_000,
         limit: 10,
       },
     ]),
@@ -46,4 +53,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // consumer
+    //   .apply(LoggerMiddleware)
+    //   .exclude({ path: '/api/auth', method: RequestMethod.ALL })
+    //   .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
